@@ -2,288 +2,244 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#000000">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="BETECH OS">
-<link rel="apple-touch-icon" href="logo.png">
-<link rel="apple-touch-icon" sizes="152x152" href="logo.png">
-<link rel="apple-touch-icon" sizes="180x180" href="logo.png">
-<title>BETECH - OS v3.2</title>
-<link rel="manifest" href="manifest.json">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>BETHEC - Ordem de Serviço</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
-*{box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
-body{background:#f1f5f9;margin:0;padding:0}
-.tela{display:none;min-height:100vh}.tela.ativa{display:block}
-.login{max-width:380px;margin:20px auto;background:#fff;padding:22px;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.1)}
-.logo-top{text-align:center;margin-bottom:12px}
-.logo-top img{width:200px;max-width:90%}
-.login input{width:100%;padding:12px;border:1px solid #e2e8f0;border-radius:10px;margin:6px 0}
-.btn{width:100%;background:#000;color:#fff;border:none;padding:12px;border-radius:10px;font-weight:700;cursor:pointer;margin-top:8px}
-.btn-red{background:#b91c1c}
-.btn-ghost{width:100%;background:#f8fafc;border:1px solid #e2e8f0;padding:10px;border-radius:10px;font-weight:600;cursor:pointer;margin-top:8px}
-.link{font-size:12px;text-align:center;color:#b91c1c;cursor:pointer;margin-top:10px;display:block}
-.regras{font-size:11px;color:#64748b;background:#f8fafc;border:1px dashed #cbd5e1;padding:8px;border-radius:8px;margin:6px 0}
-.topbar{background:#000;color:#fff;padding:12px 16px;display:flex;justify-content:space-between;align-items:center}
-.tabs{display:flex;gap:6px;padding:10px;background:#fff;border-bottom:1px solid #e2e8f0;overflow:auto}
-.tabs button{flex:1;white-space:nowrap;border:1px solid #e2e8f0;background:#f8fafc;padding:8px 10px;border-radius:20px;font-weight:700;font-size:12px;cursor:pointer}
-.tabs button.ativo{background:#000;color:#fff}
-.aba{padding:10px}
-.card{background:#fff;border-radius:14px;padding:14px;margin-bottom:10px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
-.card input,.card select{width:100%;padding:11px;border:1px solid #e2e8f0;border-radius:10px;margin:5px 0}
-.folha{max-width:800px;margin:auto;background:#fff;padding:20px}
-.topo{display:flex;gap:20px;align-items:center;margin-bottom:15px}
-.topo img{width:160px}
-.info{font-size:14px;line-height:1.6;font-weight:bold}
-.box{border:1px solid #000;padding:10px;font-size:13px;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:10px}
-.box input[type="text"]{border:none;border-bottom:1px solid #000;outline:none;width:110px;font-size:13px}
-.tipos{display:flex;gap:20px;grid-column:span 4;align-items:center}
-h3{background:#f0f0f0;margin:0;padding:6px;font-size:14px;border:1px solid #000;border-bottom:none}
-table{width:100%;border-collapse:collapse;margin-bottom:12px}
-th,td{border:1px solid #000;padding:6px;height:24px;font-size:13px}
-.fotos{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:15px 0}
-.foto{border:2px dashed #999;padding:10px;text-align:center;border-radius:8px;background:#fafafa}
-.foto img{max-width:100%;max-height:220px;display:none;margin:10px auto}
-.btn-pdf{background:#b91c1c;color:#fff;border:none;padding:12px 20px;border-radius:6px;cursor:pointer;font-weight:bold;font-size:15px;width:100%;margin-top:10px}
-.admin-table{width:100%;font-size:11px;border-collapse:collapse}
-.admin-table th,.admin-table td{border:1px solid #e2e8f0;padding:6px;text-align:left}
-.ios-aviso{display:none;background:#000;color:#fff;padding:10px;border-radius:10px;font-size:11px;text-align:center;margin-bottom:10px}
+:root{--primary:#111827;--blue:#2563eb;--gray:#6b7280;--border:#000;--bg:#f3f4f6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,Arial,sans-serif;background:var(--bg);color:#111;overflow-x:hidden}
+.top-bar{display:flex;gap:8px;padding:10px;overflow-x:auto;background:#fff;border-bottom:1px solid #ddd;position:sticky;top:0;z-index:10}
+.top-bar button{white-space:nowrap;border:1px solid #ddd;border-radius:20px;padding:8px 14px;background:#fff;cursor:pointer;font-weight:600}
+.top-bar button.active{background:#000;color:#fff}
+.container{max-width:900px;margin:0 auto;padding:12px;width:100%}
+.card{background:#fff;border-radius:16px;border:1.5px solid #000;box-shadow:4px 4px 0 #000;padding:16px;margin-bottom:12px;width:100%;overflow:hidden}
+.header{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+.header img{width:140px;height:auto}
+.header-info{font-weight:800;font-size:13px;line-height:1.35}
+@media(min-width:768px){.header img{width:180px}.header-info{font-size:15px}}
+.os-number{text-align:center;border:1.5px solid #000;border-radius:12px;padding:14px;margin:14px 0;box-shadow:3px 3px 0 #000}
+.os-number b{font-size:32px;display:block}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1.5px solid #000}
+.form-grid .field{border:0.5px solid #000;padding:10px;min-height:64px;display:flex;flex-direction:column;justify-content:space-between}
+.field label{font-weight:800;font-size:13px}
+.field input{border:none;border-bottom:1px solid #999;width:100%;padding:6px 0;outline:none;font-size:14px;background:transparent}
+.tipo-box{display:flex;flex-wrap:wrap;gap:14px;padding:12px;border:1.5px dashed #000;border-radius:12px;margin:12px 0;align-items:center}
+.tipo-box label{display:flex;align-items:center;gap:6px;cursor:pointer;font-weight:700;font-size:14px}
+.tipo-box input[type=radio],.tipo-box input[type=checkbox]{width:22px;height:22px;accent-color:#000}
+.table-wrap{width:100%;overflow-x:auto}
+table{width:100%;border-collapse:collapse;border:1.5px solid #000;min-width:100%}
+th{background:#1e293b;color:#fff;padding:8px;font-size:13px;border:1px solid #000}
+td{border:1px solid #000;padding:6px;height:36px}
+td input{width:100%;border:none;outline:none;font-size:13px}
+.desc-box textarea{width:100%;min-height:110px;border:1.5px solid #000;border-radius:8px;padding:10px;font-size:14px;resize:vertical}
+.horarios{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.horarios .field{border:1.5px solid #000;border-radius:10px}
+#sigCanvas{width:100%;height:180px;border:2px solid #000;border-radius:12px;touch-action:none;background:#fff;cursor:crosshair}
+.status-group{display:flex;flex-direction:column;gap:10px}
+.status-option{display:flex;align-items:center;gap:10px;border:2px solid #000;border-radius:30px;padding:12px 16px;cursor:pointer;font-weight:800;background:#fff}
+.status-option input{width:22px;height:22px}
+.fotos{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fotos button{padding:12px;border-radius:12px;border:none;font-weight:800;cursor:pointer}
+.btn-cam{background:var(--blue);color:#fff}
+.btn-gal{background:#374151;color:#fff}
+.thumb-grid{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.thumb-grid img{width:70px;height:70px;object-fit:cover;border:1.5px solid #000;border-radius:8px}
+.action-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0}
+.action-row button{padding:16px;border-radius:14px;font-weight:900;font-size:15px;cursor:pointer;border:2px solid #000}
+.btn-print{background:#fff}
+.btn-pdf{background:#000;color:#fff}
+.company-select{width:100%;padding:12px;border-radius:12px;border:1.5px solid #000;font-weight:700;margin-bottom:8px}
+@media(min-width:768px){
+  .container{padding:20px}
+  .form-grid{grid-template-columns:1fr 1fr 1fr}
+  .horarios{grid-template-columns:1fr 1fr 1fr 1fr}
+  #sigCanvas{height:220px}
+}
+@media(min-width:1024px){
+  .container{max-width:1100px}
+  .form-grid{grid-template-columns:1fr 1fr 1fr 1fr}
+  .header img{width:200px}
+}
 </style>
 </head>
 <body>
-<div id="telaLogin" class="tela ativa">
-  <div class="login">
-    <div class="logo-top"><img src="logo.png"></div>
-    <div id="iosAviso" class="ios-aviso">📱 iPhone: Compartilhar ⬆️ > Adicionar à Tela de Início</div>
-    <h3 style="text-align:center">Acesso ao App</h3>
-    <input id="loginEmail" type="email" placeholder="E-mail de acesso">
-    <input id="loginSenha" type="password" placeholder="Senha">
-    <button class="btn" onclick="fazerLogin()">Entrar no App</button>
-    <span class="link" onclick="mostrar('telaCadastro')">Não tem conta? Criar login e senha</span>
-    <span class="link" onclick="mostrar('telaEsqueci')">Esqueci minha senha</span>
-    <span class="link" style="color:#64748b" onclick="mostrar('telaAdmin')">⚙️ Acesso Programador</span>
-  </div>
+<div class="top-bar">
+  <button class="active">🧾 OS</button>
+  <button onclick="alert('Empresas salvas no localStorage')">📁 Empresas</button>
+  <button onclick="document.getElementById('empresaInput').focus()">🏢 Nova Empresa</button>
+  <button onclick="location.reload()">🏠 Home</button>
 </div>
-<div id="telaCadastro" class="tela">
-  <div class="login">
-    <div class="logo-top"><img src="logo.png"></div>
-    <h3 style="text-align:center">Criar Login</h3>
-    <input id="cadNome" placeholder="Nome completo *">
-    <input id="cadEmail" type="email" placeholder="E-mail *">
-    <div class="regras">🔒 Senha: 6 a 8 caracteres, 1 MAIÚSCULA, 1 especial !@#$%^&*<br>Ex: Betech@1</div>
-    <input id="cadSenha" type="password" placeholder="Senha: Ex: Betech@1">
-    <input id="cadSenha2" type="password" placeholder="Confirmar">
-    <input id="cadTel" placeholder="Telefone / WhatsApp">
-    <button class="btn btn-red" onclick="criarUsuario()">Criar Login e Entrar</button>
-    <span class="link" onclick="mostrar('telaLogin')">← Voltar</span>
+<div class="container">
+  <div class="card">
+    <label>Empresa (pasta) *</label>
+    <select id="empresaSelect" class="company-select" onchange="salvarAuto()">
+      <option value="">Selecione a empresa *</option>
+    </select>
+    <input id="empresaInput" class="company-select" placeholder="Ou digite nova empresa e pressione Enter" onkeydown="if(event.key==='Enter')addEmpresa()">
+    <small>Pasta: <b id="pastaNome">Nenhuma</b> - Salvamento automático ativo</small>
   </div>
-</div>
-<div id="telaEsqueci" class="tela">
-  <div class="login">
-    <div class="logo-top"><img src="logo.png"></div>
-    <h3>Recuperar Senha</h3>
-    <input id="recEmail" type="email" placeholder="E-mail cadastrado">
-    <button class="btn" onclick="enviarRecuperacao()">Enviar Link</button>
-    <span class="link" onclick="mostrar('telaLogin')">← Voltar</span>
-    <p id="recStatus" style="font-size:12px;text-align:center"></p>
-  </div>
-</div>
-<div id="telaRedefinir" class="tela">
-  <div class="login">
-    <div class="logo-top"><img src="logo.png"></div>
-    <h3>Nova Senha</h3>
-    <p id="recInfo" style="font-size:12px"></p>
-    <div class="regras">6-8 dígitos, 1 maiúscula e 1 especial (!@#$%^&*)</div>
-    <input id="novaSenha" type="password" placeholder="Nova: Ex: Betech@2">
-    <input id="novaSenha2" type="password" placeholder="Confirmar nova">
-    <button class="btn btn-red" onclick="confirmarNovaSenha()">Salvar Nova Senha</button>
-  </div>
-</div>
-<div id="telaAdmin" class="tela">
-  <div class="login" style="max-width:700px">
-    <h3>🔒 Banco - Programador</h3>
-    <input type="password" id="adminPass" placeholder="Senha: bethec2024">
-    <button class="btn" onclick="abrirBanco()">Abrir Banco</button>
-    <div id="bancoDados" style="display:none;margin-top:15px">
-      <div style="overflow:auto"><table class="admin-table" id="tabelaBanco"></table></div>
-      <button class="btn-ghost" onclick="exportarBanco()">📥 Exportar JSON</button>
-      <button class="btn-ghost" onclick="limparBanco()">🗑️ Limpar tudo</button>
+
+  <div class="card" id="osCard">
+    <div class="header">
+      <div style="font-weight:900;font-size:22px">BETHEC<br><span style="background:#b91c1c;color:#fff;padding:2px 6px;font-size:12px">EMPILHADEIRAS</span></div>
+      <div class="header-info">
+        BETHEC Empilhadeiras<br>Peças e assistência técnica para empilhadeiras<br>
+        bethecemp@outlook.com | 65.940.241/0001-66<br>15 99129-6558 - Sorocaba/SP
+      </div>
     </div>
-    <span class="link" onclick="mostrar('telaLogin')">← Voltar</span>
-  </div>
-</div>
-<div id="telaApp" class="tela">
-  <div class="topbar"><span><b id="nomeUsuario">BETECH</b></span><div><button onclick="instalar()" style="background:rgba(255,255,255,.15);border:none;color:#fff;padding:6px 10px;border-radius:8px">📲</button> <button onclick="sair()" style="background:rgba(255,255,255,.15);border:none;color:#fff;padding:6px 10px;border-radius:8px">Sair</button></div></div>
-  <div class="tabs">
-    <button id="tHome" class="ativo" onclick="aba('home')">🏠 Home</button>
-    <button id="tNova" onclick="aba('nova')">🏢 Nova Empresa</button>
-    <button id="tLista" onclick="aba('lista')">📁 Empresas</button>
-    <button id="tOS" onclick="aba('os')">🧾 OS</button>
-  </div>
-  <div id="abaHome" class="aba">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-      <div class="card" style="background:#b91c1c;color:#fff" onclick="aba('nova')"><b>➕ Nova Empresa</b><br><small id="qEmp">0</small></div>
-      <div class="card" style="background:#000;color:#fff" onclick="aba('lista')"><b>📁 Pastas</b><br><small id="qPdf">0</small></div>
+    <div class="os-number">
+      <div style="font-weight:800;letter-spacing:1px">ORDEM DE SERVIÇO Nº</div>
+      <b id="numOS">8537</b>
+      <div style="border-top:2px solid #000;margin-top:8px;padding-top:8px;font-weight:800" id="dataOS"></div>
     </div>
-    <div class="card"><b>Últimos PDFs</b><div id="ultimos"></div></div>
-  </div>
-  <div id="abaNova" class="aba" style="display:none"><div class="card"><h3>Cadastrar Empresa</h3><input id="empNome" placeholder="Nome *"><input id="empCnpj" placeholder="CNPJ *" maxlength="18" oninput="maskCNPJ(this)"><input id="empTel" placeholder="Telefone *" oninput="maskTel(this)"><input id="empResp" placeholder="Responsável *"><input id="empEmail" type="email" placeholder="E-mail Responsável *"><input id="empEnd" placeholder="Endereço"><button class="btn btn-red" onclick="salvarEmpresa()">Salvar Empresa e Criar Pasta</button></div></div>
-  <div id="abaLista" class="aba" style="display:none"><div class="card"><input id="busca" placeholder="Buscar..." oninput="renderEmpresas()"><div id="listaEmpresas"></div></div></div>
-  <div id="abaOS" class="aba" style="display:none">
-    <div class="card no-print"><label>Empresa (pasta) *</label><select id="osEmpresa" onchange="preencherEmpresa()"></select><small>Pasta: <b id="pastaNome">Nenhuma</b></small></div>
-    <div class="folha" id="folha"><div class="topo"><img src="logo.png"><div class="info">BETHEC Peças e assistência técnica para empilhadeiras<br><br>EMAIL: bethecemp@outlook.com<br>CNPJ: 65.940.241/0001-66<br>Telefone: 15 99129-6558<br>Sorocaba-sp</div></div><div class="box"><div>Empresa: <input type="text" id="osNomeEmpresa"></div><div>Data: <input type="text" id="osData"></div><div>Marca: <input type="text"></div><div>Horimetro: <input type="text"></div><div>Cidade: <input type="text" id="osCidade"></div><div></div><div>Modelo: <input type="text"></div><div>Motor: <input type="text"></div><div class="tipos"><strong>Tipo:</strong><label><input type="radio" name="tipo" value="corretiva"> corretiva</label><label><input type="radio" name="tipo" value="preventiva"> preventiva</label><label><input type="checkbox" id="orc"> orçamento</label></div><div>Chassis: <input type="text"></div><div>Frota: <input type="text"></div><div>Nº OS: <input type="text" id="numOS"></div></div><h3>Peças aplicadas</h3><table><tr><th>Qntd</th><th>Código</th><th>Descrição</th></tr><tr><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td></tr><tr><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td></tr><tr><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td></tr></table><h3>Mão de obra:</h3><table><tr><td contenteditable="true" style="height:28px"></td></tr><tr><td contenteditable="true" style="height:28px"></td></tr><tr><td contenteditable="true" style="height:28px"></td></tr></table><div class="fotos"><div class="foto"><strong>📸 ANTES</strong><br><input type="file" id="fAntes" accept="image/*"><br><img id="pAntes"></div><div class="foto"><strong>📸 DEPOIS</strong><br><input type="file" id="fDepois" accept="image/*"><br><img id="pDepois"></div></div><div class="no-print"><button class="btn-pdf" onclick="finalizar()">📄 Finalizar, Salvar na Pasta e Enviar E-mail</button><p id="statusOS" style="font-size:12px;text-align:center"></p></div></div>
+
+    <div class="form-grid">
+      <div class="field"><label>Empresa</label><input id="fEmpresa" oninput="salvarAuto()"></div>
+      <div class="field"><label>Cidade</label><input id="fCidade" oninput="salvarAuto()"></div>
+      <div class="field"><label>Horímetro</label><input id="fHorimetro" oninput="salvarAuto()"></div>
+      <div class="field"><label>Marca</label><input id="fMarca" oninput="salvarAuto()"></div>
+      <div class="field"><label>Modelo</label><input id="fModelo" oninput="salvarAuto()"></div>
+      <div class="field"><label>Motor</label><input id="fMotor" oninput="salvarAuto()"></div>
+      <div class="field"><label>Chassis</label><input id="fChassis" oninput="salvarAuto()"></div>
+      <div class="field"><label>Frota</label><input id="fFrota" oninput="salvarAuto()"></div>
+    </div>
+
+    <div class="tipo-box">
+      <strong>Tipo:</strong>
+      <label><input type="radio" name="tipo" value="Corretiva" onchange="salvarAuto()"> Corretiva</label>
+      <label><input type="radio" name="tipo" value="Preventiva" onchange="salvarAuto()"> Preventiva</label>
+      <label><input type="checkbox" id="tipoOrc" onchange="salvarAuto()"> Orçamento</label>
+    </div>
+
+    <div class="table-wrap">
+      <table id="pecasTable">
+        <tr><th colspan="3" style="background:#fff;color:#000;text-align:left">Peças Aplicadas</th></tr>
+        <tr><th style="width:15%">Qtd</th><th style="width:25%">Código</th><th>Descrição</th></tr>
+      </table>
+    </div>
+    <button onclick="addLinha()" style="margin:8px 0;padding:8px 12px;border:1px solid #000;border-radius:8px;background:#fff;font-weight:700;cursor:pointer">+ Adicionar peça</button>
+
+    <div class="desc-box">
+      <div style="background:#1e293b;color:#fff;padding:8px 12px;font-weight:800;display:flex;justify-content:space-between"><span>Descrição da Mão de Obra</span><span id="contador">0/1000</span></div>
+      <textarea id="descMao" maxlength="1000" placeholder="Descreva o serviço..." oninput="document.getElementById('contador').innerText=this.value.length+'/1000';salvarAuto()"></textarea>
+    </div>
+
+    <div style="margin-top:12px"><b>HORÁRIOS</b>
+      <div class="horarios" style="margin-top:6px">
+        <div class="field"><label>Saída Oficina</label><input type="time" id="h1" onchange="salvarAuto()"></div>
+        <div class="field"><label>Chegada Cliente</label><input type="time" id="h2" onchange="salvarAuto()"></div>
+        <div class="field"><label>Saída Cliente</label><input type="time" id="h3" onchange="salvarAuto()"></div>
+        <div class="field"><label>Chegada Oficina</label><input type="time" id="h4" onchange="salvarAuto()"></div>
+      </div>
+    </div>
+
+    <div style="margin-top:16px"><b>ASSINATURA RESPONSÁVEL</b>
+      <canvas id="sigCanvas"></canvas>
+      <button onclick="limparAss()" style="padding:6px 12px;border:1px solid #ccc;border-radius:8px;margin-top:6px">Limpar</button>
+    </div>
+
+    <div style="margin-top:16px"><b>STATUS</b>
+      <div class="status-group" style="margin-top:8px">
+        <label class="status-option"><input type="radio" name="status" value="LIBERADO" checked onchange="salvarAuto()"> LIBERADO</label>
+        <label class="status-option"><input type="radio" name="status" value="PARADO" onchange="salvarAuto()"> PARADO</label>
+        <label class="status-option"><input type="radio" name="status" value="AGUARDANDO PEÇA" onchange="salvarAuto()"> AGUARDANDO PEÇA</label>
+      </div>
+      <div class="field" style="margin-top:10px;border:1.5px solid #000;border-radius:10px"><label>Técnico</label><input id="fTecnico" placeholder="Nome" oninput="salvarAuto()"></div>
+    </div>
+
+    <div style="margin-top:16px">
+      <div class="card" style="box-shadow:none;margin:0 0 10px 0">
+        <div style="display:flex;justify-content:space-between;font-weight:900"><span>📷 ANTES</span><span id="cAntes" style="background:#000;color:#fff;border-radius:12px;padding:2px 8px">0/5</span></div>
+        <div class="fotos" style="margin-top:10px">
+          <button class="btn-cam" onclick="document.getElementById('fileAntesCam').click()">📷 Câmera</button>
+          <button class="btn-gal" onclick="document.getElementById('fileAntesGal').click()">🖼️ Galeria</button>
+        </div>
+        <input type="file" id="fileAntesCam" accept="image/*" capture="environment" hidden onchange="handleFotos(this,'antes')">
+        <input type="file" id="fileAntesGal" accept="image/*" multiple hidden onchange="handleFotos(this,'antes')">
+        <div id="gridAntes" class="thumb-grid"></div>
+      </div>
+      <div class="card" style="box-shadow:none;margin:0">
+        <div style="display:flex;justify-content:space-between;font-weight:900"><span>📷 DEPOIS</span><span id="cDepois" style="background:#000;color:#fff;border-radius:12px;padding:2px 8px">0/5</span></div>
+        <div class="fotos" style="margin-top:10px">
+          <button class="btn-cam" onclick="document.getElementById('fileDepoisCam').click()">📷 Câmera</button>
+          <button class="btn-gal" onclick="document.getElementById('fileDepoisGal').click()">🖼️ Galeria</button>
+        </div>
+        <input type="file" id="fileDepoisCam" accept="image/*" capture="environment" hidden onchange="handleFotos(this,'depois')">
+        <input type="file" id="fileDepoisGal" accept="image/*" multiple hidden onchange="handleFotos(this,'depois')">
+        <div id="gridDepois" class="thumb-grid"></div>
+      </div>
+    </div>
+
+    <div class="action-row">
+      <button class="btn-print" onclick="window.print()">Imprimir</button>
+      <button class="btn-pdf" onclick="gerarPDF()">Gerar PDF - 2 Páginas</button>
+    </div>
   </div>
 </div>
 <script>
-const EMAILJS_PUBLIC="SUA_PUBLIC_KEY"; 
-const EMAILJS_SERVICE="SUA_SERVICE_ID";
-const EMAILJS_TEMPLATE_REC="TEMPLATE_RECUPERACAO";
-const EMAILJS_TEMPLATE_OS="TEMPLATE_OS";
-if(EMAILJS_PUBLIC!=="SUA_PUBLIC_KEY" && window.emailjs) emailjs.init(EMAILJS_PUBLIC);
-const KEY_USERS="betech_users_db_v3";
-const KEY_EMP="betech_empresas_v3";
-const KEY_PDF="betech_pdfs_v3";
-const KEY_SESS="betech_session_v3";
-const KEY_TOKENS="betech_tokens_v3";
-let usuarios=JSON.parse(localStorage.getItem(KEY_USERS)||"[]");
-let empresas=JSON.parse(localStorage.getItem(KEY_EMP)||"[]");
-let pdfs=JSON.parse(localStorage.getItem(KEY_PDF)||"[]");
-let tokens=JSON.parse(localStorage.getItem(KEY_TOKENS)||"[]");
-function salvarTudo(){localStorage.setItem(KEY_USERS,JSON.stringify(usuarios));localStorage.setItem(KEY_EMP,JSON.stringify(empresas));localStorage.setItem(KEY_PDF,JSON.stringify(pdfs));localStorage.setItem(KEY_TOKENS,JSON.stringify(tokens));}
-function maskCNPJ(el){let v=el.value.replace(/\D/g,"").slice(0,14);v=v.replace(/^(\d{2})(\d)/,"$1.$2");v=v.replace(/^(\d{2})\.(\d{3})(\d)/,"$1.$2.$3");v=v.replace(/\.(\d{3})(\d)/,".$1/$2");v=v.replace(/(\d{4})(\d)/,"$1-$2");el.value=v;}
-function maskTel(el){let v=el.value.replace(/\D/g,"").slice(0,11);if(v.length>6){v=v.replace(/^(\d{2})(\d{5})(\d{4}).*/,"($1) $2-$3");}else if(v.length>2){v=v.replace(/^(\d{2})(\d+)/,"($1) $2");}el.value=v;}
-function mostrar(id){document.querySelectorAll('.tela').forEach(t=>t.classList.remove('ativa'));document.getElementById(id).classList.add('ativa');}
-function validarSenhaForte(senha){
-  if(senha.length < 6 || senha.length > 8) return "Senha deve ter de 6 a 8 caracteres";
-  if(!/[A-Z]/.test(senha)) return "Precisa ter 1 letra MAIÚSCULA";
-  if(!/[!@#$%^&*]/.test(senha)) return "Precisa ter 1 especial (!@#$%^&*)";
-  return null;
+let dados={antes:[],depois:[],assinatura:null}
+function init(){
+  document.getElementById('dataOS').innerText=new Date().toLocaleDateString('pt-BR');
+  let num=localStorage.getItem('bethec_last_os'); if(!num){num=8537}else{num=parseInt(num)+1}
+  document.getElementById('numOS').innerText=num; localStorage.setItem('bethec_last_os',num);
+  for(let i=0;i<3;i++) addLinha();
+  carregarEmpresas(); setupCanvas(); carregarAuto();
 }
-async function hashSenha(senha){
-  const buf=await crypto.subtle.digest("SHA-256", new TextEncoder().encode(senha));
-  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+function addEmpresa(){
+  let v=document.getElementById('empresaInput').value.trim(); if(!v)return;
+  let emps=JSON.parse(localStorage.getItem('bethec_empresas')||'[]'); if(!emps.includes(v)) emps.push(v);
+  localStorage.setItem('bethec_empresas',JSON.stringify(emps)); document.getElementById('empresaInput').value=''; carregarEmpresas(); document.getElementById('empresaSelect').value=v; salvarAuto();
 }
-async function criarUsuario(){
-  let nome=document.getElementById("cadNome").value.trim();
-  let email=document.getElementById("cadEmail").value.trim().toLowerCase();
-  let senha=document.getElementById("cadSenha").value;
-  let senha2=document.getElementById("cadSenha2").value;
-  let tel=document.getElementById("cadTel").value.trim();
-  if(!nome||!email||!senha) return alert("Preencha nome, e-mail e senha");
-  let erro=validarSenhaForte(senha);
-  if(erro) return alert(erro+"\nEx: Betech@1");
-  if(senha!==senha2) return alert("Senhas não conferem");
-  if(usuarios.find(u=>u.email===email)) return alert("E-mail já cadastrado");
-  let hash=await hashSenha(senha);
-  let user={id:Date.now(),nome,email,senhaHash:hash,senhaOriginal:senha,tel,criado:new Date().toISOString(),ultimoAcesso:new Date().toISOString()};
-  usuarios.push(user); salvarTudo();
-  localStorage.setItem(KEY_SESS, JSON.stringify({email,nome,id:user.id}));
-  checkSessao(); mostrar('telaApp');
+function carregarEmpresas(){
+  let emps=JSON.parse(localStorage.getItem('bethec_empresas')||'[]'); let sel=document.getElementById('empresaSelect');
+  sel.innerHTML='<option value="">Selecione a empresa *</option>'; emps.forEach(e=>{let o=document.createElement('option');o.value=e;o.innerText=e;sel.appendChild(o)})
 }
-async function fazerLogin(){
-  let email=document.getElementById("loginEmail").value.trim().toLowerCase();
-  let senha=document.getElementById("loginSenha").value;
-  if(!email||!senha) return alert("Digite e-mail e senha");
-  let hash=await hashSenha(senha);
-  let user=usuarios.find(u=>u.email===email && u.senhaHash===hash);
-  if(!user) return alert("E-mail ou senha incorretos");
-  user.ultimoAcesso=new Date().toISOString(); salvarTudo();
-  localStorage.setItem(KEY_SESS, JSON.stringify({email:user.email,nome:user.nome,id:user.id}));
-  checkSessao(); mostrar('telaApp');
+function addLinha(){ let tr=document.createElement('tr'); tr.innerHTML='<td><input oninput=salvarAuto()></td><td><input oninput=salvarAuto()></td><td><input oninput=salvarAuto()></td>'; document.getElementById('pecasTable').appendChild(tr)}
+function setupCanvas(){
+  const c=document.getElementById('sigCanvas'); const ctx=c.getContext('2d'); function resize(){ const r=c.getBoundingClientRect(); c.width=r.width*2; c.height=r.height*2; ctx.scale(2,2); ctx.lineWidth=2; ctx.lineCap='round'}; resize();
+  let drawing=false; function pos(e){ const rect=c.getBoundingClientRect(); const t=e.touches?e.touches[0]:e; return {x:t.clientX-rect.left,y:t.clientY-rect.top} }
+  c.addEventListener('mousedown',e=>{drawing=true; const p=pos(e); ctx.beginPath(); ctx.moveTo(p.x,p.y)}); 
+  c.addEventListener('mousemove',e=>{ if(!drawing)return; const p=pos(e); ctx.lineTo(p.x,p.y); ctx.stroke()});
+  c.addEventListener('mouseup',()=>{drawing=false; salvarAss()}); 
+  c.addEventListener('touchstart',e=>{drawing=true; const p=pos(e); ctx.beginPath(); ctx.moveTo(p.x,p.y); e.preventDefault()}, {passive:false});
+  c.addEventListener('touchmove',e=>{ if(!drawing)return; const p=pos(e); ctx.lineTo(p.x,p.y); ctx.stroke(); e.preventDefault()}, {passive:false});
+  c.addEventListener('touchend',()=>{drawing=false; salvarAss()});
 }
-function checkSessao(){
-  let sess=JSON.parse(localStorage.getItem(KEY_SESS)||"null");
-  if(sess){
-    document.querySelectorAll('.tela').forEach(t=>t.classList.remove('ativa'));
-    document.getElementById('telaApp').classList.add('ativa');
-    document.getElementById('nomeUsuario').textContent=sess.nome||"BETECH";
-    initApp();
-  }
-  let params=new URLSearchParams(window.location.search);
-  let tok=params.get('token');
-  if(tok){ verificarToken(tok); }
-  if(/iPhone|iPad|iPod/.test(navigator.userAgent)){
-    let el=document.getElementById("iosAviso");
-    if(el) el.style.display="block";
-  }
+function limparAss(){ const c=document.getElementById('sigCanvas'); const ctx=c.getContext('2d'); ctx.clearRect(0,0,c.width,c.height); dados.assinatura=null; salvarAuto()}
+function salvarAss(){ const c=document.getElementById('sigCanvas'); dados.assinatura=c.toDataURL(); salvarAuto()}
+function handleFotos(input,tipo){
+  const files=input.files; for(let f of files){ if(dados[tipo].length>=5){alert('Máximo 5 fotos em '+tipo); break} const r=new FileReader(); r.onload=e=>{dados[tipo].push(e.target.result); renderFotos(); salvarAuto()}; r.readAsDataURL(f) } input.value='';
 }
-checkSessao();
-function sair(){localStorage.removeItem(KEY_SESS);location.reload();}
-async function enviarRecuperacao(){
-  let email=document.getElementById("recEmail").value.trim().toLowerCase();
-  if(!email) return alert("Digite o e-mail");
-  let user=usuarios.find(u=>u.email===email);
-  if(!user) return alert("E-mail não encontrado");
-  let token=Math.random().toString(36).substring(2,15)+Math.random().toString(36).substring(2,15)+Date.now().toString(36);
-  tokens.push({token,email,criado:Date.now(),usado:false});
-  salvarTudo();
-  let link=window.location.origin+window.location.pathname+"?token="+token;
-  document.getElementById("recStatus").textContent="Gerando link...";
-  if(EMAILJS_PUBLIC!=="SUA_PUBLIC_KEY"){
-    try{
-      await emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE_REC, {to_email:email,to_name:user.nome,reset_link:link});
-      document.getElementById("recStatus").textContent="✅ Link enviado para "+email;
-    }catch(e){
-      document.getElementById("recStatus").innerHTML="Link:<br><a href='"+link+"'>"+link+"</a>";
+function renderFotos(){ ['antes','depois'].forEach(t=>{ const g=document.getElementById(t==='antes'?'gridAntes':'gridDepois'); g.innerHTML=''; dados[t].forEach((src,i)=>{ let img=document.createElement('img'); img.src=src; img.onclick=()=>{ if(confirm('Remover foto?')){ dados[t].splice(i,1); renderFotos(); salvarAuto()}}; g.appendChild(img)}); document.getElementById(t==='antes'?'cAntes':'cDepois').innerText=dados[t].length+'/5'})}
+function salvarAuto(){
+  const empresa=document.getElementById('empresaSelect').value||document.getElementById('fEmpresa').value;
+  document.getElementById('pastaNome').innerText=empresa||'Nenhuma';
+  const payload={ empresa, fEmpresa:document.getElementById('fEmpresa').value, fCidade:document.getElementById('fCidade').value, fHorimetro:document.getElementById('fHorimetro').value, fMarca:document.getElementById('fMarca').value, fModelo:document.getElementById('fModelo').value, fMotor:document.getElementById('fMotor').value, fChassis:document.getElementById('fChassis').value, fFrota:document.getElementById('fFrota').value, tipo:document.querySelector('input[name=tipo]:checked')?.value||'', orc:document.getElementById('tipoOrc').checked, desc:document.getElementById('descMao').value, h1:document.getElementById('h1').value, h2:document.getElementById('h2').value, h3:document.getElementById('h3').value, h4:document.getElementById('h4').value, status:document.querySelector('input[name=status]:checked')?.value, tecnico:document.getElementById('fTecnico').value, dados, num:document.getElementById('numOS').innerText, data:document.getElementById('dataOS').innerText, pecas:[...document.querySelectorAll('#pecasTable tr')].slice(2).map(tr=>[...tr.querySelectorAll('input')].map(i=>i.value)) };
+  if(empresa) localStorage.setItem('bethec_os_'+empresa+'_'+payload.num, JSON.stringify(payload));
+  localStorage.setItem('bethec_current_os', JSON.stringify(payload));
+}
+function carregarAuto(){ const s=localStorage.getItem('bethec_current_os'); if(!s)return; try{ const p=JSON.parse(s); document.getElementById('fEmpresa').value=p.fEmpresa||''; document.getElementById('fCidade').value=p.fCidade||''; document.getElementById('fHorimetro').value=p.fHorimetro||''; document.getElementById('fMarca').value=p.fMarca||''; document.getElementById('fModelo').value=p.fModelo||''; document.getElementById('fMotor').value=p.fMotor||''; document.getElementById('fChassis').value=p.fChassis||''; document.getElementById('fFrota').value=p.fFrota||''; document.getElementById('descMao').value=p.desc||''; document.getElementById('fTecnico').value=p.tecnico||''; dados=p.dados||{antes:[],depois:[],assinatura:null}; renderFotos(); }catch(e){} }
+async function gerarPDF(){
+  salvarAuto();
+  const {jsPDF}=window.jspdf; const doc=new jsPDF('p','mm','a4'); const empresa=document.getElementById('empresaSelect').value||document.getElementById('fEmpresa').value||'SemEmpresa';
+  doc.setFontSize(12); doc.text('BETHEC Empilhadeiras - OS N '+document.getElementById('numOS').innerText,10,15);
+  doc.text('Empresa: '+document.getElementById('fEmpresa').value,10,22); doc.text('Data: '+document.getElementById('dataOS').innerText,10,28);
+  let y=35; doc.text('Pecas:',10,y); y+=6; document.querySelectorAll('#pecasTable tr').forEach((tr,i)=>{ if(i<2)return; const vals=[...tr.querySelectorAll('input')].map(v=>v.value).join(' - '); if(vals.trim()){doc.text(vals,10,y); y+=6}}); 
+  doc.text('Descricao: '+(document.getElementById('descMao').value||''),10,y+4);
+  doc.text('Status: '+(document.querySelector('input[name=status]:checked')?.value||''),10,y+12);
+  if(dados.assinatura){ try{ doc.addImage(dados.assinatura,'PNG',10,y+18,60,20)}catch(e){} }
+  doc.addPage(); doc.text('Fotos Antes/Depois e Horarios',10,15);
+  doc.save('OS_'+empresa+'_'+document.getElementById('numOS').innerText+'.pdf');
+  setTimeout(()=>{
+    if(confirm('PDF gerado e salvo na pasta da empresa: '+empresa+'\n\nDeseja enviar direto para o e-mail da empresa bethecemp@outlook.com ?')){
+      const assunto=encodeURIComponent('OS '+document.getElementById('numOS').innerText+' - '+empresa);
+      const corpo=encodeURIComponent('Segue OS '+document.getElementById('numOS').innerText+' da empresa '+empresa+'\n\nStatus: '+document.querySelector('input[name=status]:checked').value+'\nTecnico: '+document.getElementById('fTecnico').value+'\n\nPDF salvo em: pasta '+empresa);
+      window.location.href='mailto:bethecemp@outlook.com?subject='+assunto+'&body='+corpo;
     }
-  } else {
-    document.getElementById("recStatus").innerHTML="Link:<br><a href='"+link+"' style='word-break:break-all'>"+link+"</a>";
-  }
+  },500);
 }
-let tokenAtual=null;
-function verificarToken(tok){
-  let t=tokens.find(x=>x.token===tok && !x.usado && Date.now()-x.criado < 1000*60*60*2);
-  if(!t){alert("Link inválido ou expirado");return;}
-  tokenAtual=tok;
-  document.querySelectorAll('.tela').forEach(x=>x.classList.remove('ativa'));
-  document.getElementById('telaRedefinir').classList.add('ativa');
-  document.getElementById('recInfo').textContent="Redefinindo: "+t.email;
-}
-async function confirmarNovaSenha(){
-  let s1=document.getElementById("novaSenha").value;
-  let s2=document.getElementById("novaSenha2").value;
-  let erro=validarSenhaForte(s1);
-  if(erro) return alert(erro);
-  if(s1!==s2) return alert("Senhas não conferem");
-  if(!tokenAtual) return;
-  let t=tokens.find(x=>x.token===tokenAtual);
-  let user=usuarios.find(u=>u.email===t.email);
-  if(!user) return;
-  user.senhaHash=await hashSenha(s1);
-  user.senhaOriginal=s1;
-  t.usado=true; salvarTudo();
-  alert("Senha alterada!");
-  history.replaceState({},'', window.location.pathname);
-  mostrar('telaLogin');
-}
-function abrirBanco(){
-  let pass=document.getElementById("adminPass").value;
-  if(pass!=="betech2024") return alert("Senha incorreta");
-  document.getElementById("bancoDados").style.display="block";
-  let tab=document.getElementById("tabelaBanco");
-  if(usuarios.length===0){tab.innerHTML="<tr><td>Nenhum usuário</td></tr>";return;}
-  let html="<tr><th>Nome</th><th>E-mail</th><th>Senha</th><th>Criado</th></tr>";
-  usuarios.forEach(u=>{html+=`<tr><td>${u.nome}</td><td>${u.email}</td><td><b>${u.senhaOriginal}</b></td><td>${new Date(u.criado).toLocaleDateString('pt-BR')}</td></tr>`;});
-  tab.innerHTML=html;
-}
-function exportarBanco(){let dataStr="data:text/json;charset=utf-8,"+encodeURIComponent(JSON.stringify({usuarios,empresas,pdfs,tokens},null,2));let a=document.createElement('a');a.href=dataStr;a.download="banco-betech-"+new Date().toISOString().slice(0,10)+".json";a.click();}
-function limparBanco(){if(!confirm("Apagar tudo?"))return;localStorage.clear();location.reload();}
-function aba(t){document.getElementById("abaHome").style.display=t==="home"?"block":"none";document.getElementById("abaNova").style.display=t==="nova"?"block":"none";document.getElementById("abaLista").style.display=t==="lista"?"block":"none";document.getElementById("abaOS").style.display=t==="os"?"block":"none";document.getElementById("tHome").classList.toggle("ativo",t==="home");document.getElementById("tNova").classList.toggle("ativo",t==="nova");document.getElementById("tLista").classList.toggle("ativo",t==="lista");document.getElementById("tOS").classList.toggle("ativo",t==="os");if(t==="home")renderHome();if(t==="lista")renderEmpresas();if(t==="os")renderSelect();}
-function salvarEmpresa(){let nome=document.getElementById("empNome").value.trim();let cnpj=document.getElementById("empCnpj").value.trim();let tel=document.getElementById("empTel").value.trim();let resp=document.getElementById("empResp").value.trim();let email=document.getElementById("empEmail").value.trim();let end=document.getElementById("empEnd").value.trim();if(!nome||!cnpj||!resp||!email)return alert("Preencha Nome, CNPJ, Responsável e E-mail");empresas.push({id:Date.now(),nome,cnpj,tel,resp,email,end,criado:new Date().toISOString()});salvarTudo();alert("Empresa "+nome+" criada!");aba("lista");}
-function renderSelect(){let sel=document.getElementById("osEmpresa");sel.innerHTML='<option value="">Selecione a empresa *</option>';empresas.forEach(e=>{let o=document.createElement("option");o.value=e.id;o.textContent=e.nome+" - "+e.cnpj;sel.appendChild(o);});}
-function preencherEmpresa(){let id=parseInt(document.getElementById("osEmpresa").value);if(!id)return;let emp=empresas.find(e=>e.id===id);if(emp){document.getElementById("osNomeEmpresa").value=emp.nome;document.getElementById("osCidade").value=emp.end||"";document.getElementById("pastaNome").textContent="📁 "+emp.nome;}}
-function renderEmpresas(){let busca=(document.getElementById("busca")?.value||"").toLowerCase();let lista=document.getElementById("listaEmpresas");let filt=empresas.filter(e=>e.nome.toLowerCase().includes(busca)||e.cnpj.includes(busca));if(filt.length===0){lista.innerHTML="<p style='text-align:center;color:#64748b'>Nenhuma empresa</p>";return;}lista.innerHTML=filt.map(emp=>{let q=pdfs.filter(p=>p.empresaId===emp.id).length;return `<div style="border:1px solid #e2e8f0;border-radius:12px;padding:10px;margin:8px 0"><b>${emp.nome}</b><br><small>${emp.cnpj} • ${emp.resp}</small><div style="border:1px dashed #cbd5e1;border-radius:8px;padding:6px;background:#f8fafc;margin-top:6px">📁 ${emp.nome} (${q} PDFs)</div><button class="btn" style="padding:6px;margin-top:6px" onclick="usarEmp(${emp.id})">Usar na OS</button></div>`}).join("");}
-function usarEmp(id){renderSelect();document.getElementById("osEmpresa").value=id;preencherEmpresa();aba("os");}
-function renderHome(){document.getElementById("qEmp").textContent=empresas.length+" empresas";document.getElementById("qPdf").textContent=pdfs.length+" PDFs";let ult=document.getElementById("ultimos");let rec=[...pdfs].sort((a,b)=>new Date(b.data)-new Date(a.data)).slice(0,5);ult.innerHTML=rec.length?rec.map(p=>`<div style="border-bottom:1px solid #f1f5f9;padding:6px 0;font-size:12px">🧾 ${p.nomeArquivo}</div>`).join(""):"<small>Nenhum PDF ainda</small>";}
-function bind(id,img){document.getElementById(id).addEventListener("change",function(){let f=this.files[0];if(!f)return;let r=new FileReader();r.onload=e=>{let im=document.getElementById(img);im.src=e.target.result;im.style.display="block";};r.readAsDataURL(f);});}
-bind("fAntes","pAntes");bind("fDepois","pDepois");
-async function finalizar(){let empresaId=parseInt(document.getElementById("osEmpresa").value);if(!empresaId)return alert("Selecione a empresa!");let emp=empresas.find(e=>e.id===empresaId);let num=document.getElementById("numOS").value||Math.floor(Math.random()*9000+1000);document.getElementById("statusOS").textContent="Salvando na pasta "+emp.nome+"...";let el=document.getElementById("folha");let opt={margin:5,filename:`OS-${num}-${emp.nome.replace(/\s+/g,"_")}.pdf`,image:{type:"jpeg",quality:0.95},html2canvas:{scale:2,useCORS:true},jsPDF:{unit:"mm",format:"a4",orientation:"portrait"}};let nomeArq=opt.filename;try{let pdfBlob=await html2pdf().set(opt).from(el).outputPdf("datauristring");pdfs.push({id:Date.now().toString(),empresaId:emp.id,empresaNome:emp.nome,nomeArquivo:nomeArq,base64:pdfBlob,data:new Date().toISOString()});salvarTudo();document.getElementById("statusOS").textContent=`✅ Salvo em 📁 ${emp.nome}: ${nomeArq}`;html2pdf().set(opt).from(el).save();renderHome();}catch(e){document.getElementById("statusOS").textContent="Erro: "+e.message;}}
-function initApp(){renderHome();renderEmpresas();renderSelect();document.getElementById("osData").value=new Date().toLocaleDateString("pt-BR");document.getElementById("numOS").value=Math.floor(Math.random()*9000+1000);}
-let deferredPrompt=null;window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredPrompt=e;});function instalar(){if(deferredPrompt)deferredPrompt.prompt();else if(/iPhone|iPad|iPod/.test(navigator.userAgent)){alert("iPhone: toque em Compartilhar ⬆️ > Adicionar à Tela de Início");}else alert("No celular: ⋮ > Adicionar à tela inicial");}
-if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js").catch(()=>{});}
+init();
 </script>
 </body>
 </html>
