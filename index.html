@@ -2,242 +2,210 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-<title>BETHEC - Ordem de Serviço</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BETHEC - OS</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
-:root{--primary:#111827;--blue:#2563eb;--gray:#6b7280;--border:#000;--bg:#f3f4f6}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Inter,Arial,sans-serif;background:var(--bg);color:#111;overflow-x:hidden}
-.top-bar{display:flex;gap:8px;padding:10px;overflow-x:auto;background:#fff;border-bottom:1px solid #ddd;position:sticky;top:0;z-index:10}
-.top-bar button{white-space:nowrap;border:1px solid #ddd;border-radius:20px;padding:8px 14px;background:#fff;cursor:pointer;font-weight:600}
+body{font-family:Arial;background:#f3f4f6}
+.top-bar{display:flex;gap:8px;padding:10px;background:#fff;border-bottom:2px solid #000;position:sticky;top:0;z-index:20}
+.top-bar button{border:1.5px solid #000;border-radius:20px;padding:10px 16px;font-weight:800;cursor:pointer;background:#fff}
 .top-bar button.active{background:#000;color:#fff}
-.container{max-width:900px;margin:0 auto;padding:12px;width:100%}
-.card{background:#fff;border-radius:16px;border:1.5px solid #000;box-shadow:4px 4px 0 #000;padding:16px;margin-bottom:12px;width:100%;overflow:hidden}
-.header{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
-.header img{width:140px;height:auto}
-.header-info{font-weight:800;font-size:13px;line-height:1.35}
-@media(min-width:768px){.header img{width:180px}.header-info{font-size:15px}}
+.view{display:none}
+.view.active{display:block}
+.container{max-width:900px;margin:0 auto;padding:12px}
+.card{background:#fff;border-radius:16px;border:1.5px solid #000;box-shadow:4px 4px 0 #000;padding:16px;margin-bottom:12px}
+.company-select{width:100%;padding:12px;border-radius:12px;border:1.5px solid #000;font-weight:700;margin-bottom:8px}
 .os-number{text-align:center;border:1.5px solid #000;border-radius:12px;padding:14px;margin:14px 0;box-shadow:3px 3px 0 #000}
-.os-number b{font-size:32px;display:block}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1.5px solid #000}
-.form-grid .field{border:0.5px solid #000;padding:10px;min-height:64px;display:flex;flex-direction:column;justify-content:space-between}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;border:1.5px solid #000}
+.form-grid .field{border:0.5px solid #000;padding:10px}
 .field label{font-weight:800;font-size:13px}
-.field input{border:none;border-bottom:1px solid #999;width:100%;padding:6px 0;outline:none;font-size:14px;background:transparent}
-.tipo-box{display:flex;flex-wrap:wrap;gap:14px;padding:12px;border:1.5px dashed #000;border-radius:12px;margin:12px 0;align-items:center}
-.tipo-box label{display:flex;align-items:center;gap:6px;cursor:pointer;font-weight:700;font-size:14px}
-.tipo-box input[type=radio],.tipo-box input[type=checkbox]{width:22px;height:22px;accent-color:#000}
-.table-wrap{width:100%;overflow-x:auto}
-table{width:100%;border-collapse:collapse;border:1.5px solid #000;min-width:100%}
-th{background:#1e293b;color:#fff;padding:8px;font-size:13px;border:1px solid #000}
-td{border:1px solid #000;padding:6px;height:36px}
-td input{width:100%;border:none;outline:none;font-size:13px}
-.desc-box textarea{width:100%;min-height:110px;border:1.5px solid #000;border-radius:8px;padding:10px;font-size:14px;resize:vertical}
-.horarios{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.horarios .field{border:1.5px solid #000;border-radius:10px}
-#sigCanvas{width:100%;height:180px;border:2px solid #000;border-radius:12px;touch-action:none;background:#fff;cursor:crosshair}
-.status-group{display:flex;flex-direction:column;gap:10px}
-.status-option{display:flex;align-items:center;gap:10px;border:2px solid #000;border-radius:30px;padding:12px 16px;cursor:pointer;font-weight:800;background:#fff}
-.status-option input{width:22px;height:22px}
+.field input{border:none;border-bottom:1px solid #999;width:100%;padding:6px 0;outline:none}
+#sigCanvas{width:100%;height:180px;border:2px solid #000;border-radius:12px;touch-action:none;background:#fff}
+.status-option{display:flex;align-items:center;gap:10px;border:2px solid #000;border-radius:30px;padding:12px 16px;font-weight:800;margin-top:8px;cursor:pointer;background:#fff}
+.status-option input{width:20px;height:20px}
 .fotos{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .fotos button{padding:12px;border-radius:12px;border:none;font-weight:800;cursor:pointer}
-.btn-cam{background:var(--blue);color:#fff}
-.btn-gal{background:#374151;color:#fff}
+.btn-cam{background:#2563eb;color:#fff}.btn-gal{background:#374151;color:#fff}
 .thumb-grid{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
 .thumb-grid img{width:70px;height:70px;object-fit:cover;border:1.5px solid #000;border-radius:8px}
 .action-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0}
-.action-row button{padding:16px;border-radius:14px;font-weight:900;font-size:15px;cursor:pointer;border:2px solid #000}
-.btn-print{background:#fff}
+.action-row button{padding:16px;border-radius:14px;font-weight:900;cursor:pointer;border:2px solid #000}
 .btn-pdf{background:#000;color:#fff}
-.company-select{width:100%;padding:12px;border-radius:12px;border:1.5px solid #000;font-weight:700;margin-bottom:8px}
-@media(min-width:768px){
-  .container{padding:20px}
-  .form-grid{grid-template-columns:1fr 1fr 1fr}
-  .horarios{grid-template-columns:1fr 1fr 1fr 1fr}
-  #sigCanvas{height:220px}
-}
-@media(min-width:1024px){
-  .container{max-width:1100px}
-  .form-grid{grid-template-columns:1fr 1fr 1fr 1fr}
-  .header img{width:200px}
-}
+.empresa-item{border:1.5px solid #000;border-radius:12px;padding:12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;background:#fff}
+.empresa-item:hover{background:#eef2ff}
+@media(min-width:768px){.form-grid{grid-template-columns:1fr 1fr 1fr}}
+@media(min-width:1024px){.form-grid{grid-template-columns:1fr 1fr 1fr 1fr}.container{max-width:1100px}}
 </style>
 </head>
 <body>
+
 <div class="top-bar">
-  <button class="active">🧾 OS</button>
-  <button onclick="alert('Empresas salvas no localStorage')">📁 Empresas</button>
-  <button onclick="document.getElementById('empresaInput').focus()">🏢 Nova Empresa</button>
-  <button onclick="location.reload()">🏠 Home</button>
+  <button id="btn-home" onclick="mudarTela('home')">🏠 Home</button>
+  <button id="btn-os" class="active" onclick="mudarTela('os')">🧾 OS</button>
+  <button id="btn-empresas" onclick="mudarTela('empresas')">📁 Empresas</button>
 </div>
-<div class="container">
-  <div class="card">
-    <label>Empresa (pasta) *</label>
-    <select id="empresaSelect" class="company-select" onchange="salvarAuto()">
-      <option value="">Selecione a empresa *</option>
-    </select>
-    <input id="empresaInput" class="company-select" placeholder="Ou digite nova empresa e pressione Enter" onkeydown="if(event.key==='Enter')addEmpresa()">
-    <small>Pasta: <b id="pastaNome">Nenhuma</b> - Salvamento automático ativo</small>
-  </div>
 
-  <div class="card" id="osCard">
-    <div class="header">
-      <div style="font-weight:900;font-size:22px">BETHEC<br><span style="background:#b91c1c;color:#fff;padding:2px 6px;font-size:12px">EMPILHADEIRAS</span></div>
-      <div class="header-info">
-        BETHEC Empilhadeiras<br>Peças e assistência técnica para empilhadeiras<br>
-        bethecemp@outlook.com | 65.940.241/0001-66<br>15 99129-6558 - Sorocaba/SP
-      </div>
-    </div>
-    <div class="os-number">
-      <div style="font-weight:800;letter-spacing:1px">ORDEM DE SERVIÇO Nº</div>
-      <b id="numOS">8537</b>
-      <div style="border-top:2px solid #000;margin-top:8px;padding-top:8px;font-weight:800" id="dataOS"></div>
-    </div>
-
-    <div class="form-grid">
-      <div class="field"><label>Empresa</label><input id="fEmpresa" oninput="salvarAuto()"></div>
-      <div class="field"><label>Cidade</label><input id="fCidade" oninput="salvarAuto()"></div>
-      <div class="field"><label>Horímetro</label><input id="fHorimetro" oninput="salvarAuto()"></div>
-      <div class="field"><label>Marca</label><input id="fMarca" oninput="salvarAuto()"></div>
-      <div class="field"><label>Modelo</label><input id="fModelo" oninput="salvarAuto()"></div>
-      <div class="field"><label>Motor</label><input id="fMotor" oninput="salvarAuto()"></div>
-      <div class="field"><label>Chassis</label><input id="fChassis" oninput="salvarAuto()"></div>
-      <div class="field"><label>Frota</label><input id="fFrota" oninput="salvarAuto()"></div>
-    </div>
-
-    <div class="tipo-box">
-      <strong>Tipo:</strong>
-      <label><input type="radio" name="tipo" value="Corretiva" onchange="salvarAuto()"> Corretiva</label>
-      <label><input type="radio" name="tipo" value="Preventiva" onchange="salvarAuto()"> Preventiva</label>
-      <label><input type="checkbox" id="tipoOrc" onchange="salvarAuto()"> Orçamento</label>
-    </div>
-
-    <div class="table-wrap">
-      <table id="pecasTable">
-        <tr><th colspan="3" style="background:#fff;color:#000;text-align:left">Peças Aplicadas</th></tr>
-        <tr><th style="width:15%">Qtd</th><th style="width:25%">Código</th><th>Descrição</th></tr>
-      </table>
-    </div>
-    <button onclick="addLinha()" style="margin:8px 0;padding:8px 12px;border:1px solid #000;border-radius:8px;background:#fff;font-weight:700;cursor:pointer">+ Adicionar peça</button>
-
-    <div class="desc-box">
-      <div style="background:#1e293b;color:#fff;padding:8px 12px;font-weight:800;display:flex;justify-content:space-between"><span>Descrição da Mão de Obra</span><span id="contador">0/1000</span></div>
-      <textarea id="descMao" maxlength="1000" placeholder="Descreva o serviço..." oninput="document.getElementById('contador').innerText=this.value.length+'/1000';salvarAuto()"></textarea>
-    </div>
-
-    <div style="margin-top:12px"><b>HORÁRIOS</b>
-      <div class="horarios" style="margin-top:6px">
-        <div class="field"><label>Saída Oficina</label><input type="time" id="h1" onchange="salvarAuto()"></div>
-        <div class="field"><label>Chegada Cliente</label><input type="time" id="h2" onchange="salvarAuto()"></div>
-        <div class="field"><label>Saída Cliente</label><input type="time" id="h3" onchange="salvarAuto()"></div>
-        <div class="field"><label>Chegada Oficina</label><input type="time" id="h4" onchange="salvarAuto()"></div>
-      </div>
-    </div>
-
-    <div style="margin-top:16px"><b>ASSINATURA RESPONSÁVEL</b>
-      <canvas id="sigCanvas"></canvas>
-      <button onclick="limparAss()" style="padding:6px 12px;border:1px solid #ccc;border-radius:8px;margin-top:6px">Limpar</button>
-    </div>
-
-    <div style="margin-top:16px"><b>STATUS</b>
-      <div class="status-group" style="margin-top:8px">
-        <label class="status-option"><input type="radio" name="status" value="LIBERADO" checked onchange="salvarAuto()"> LIBERADO</label>
-        <label class="status-option"><input type="radio" name="status" value="PARADO" onchange="salvarAuto()"> PARADO</label>
-        <label class="status-option"><input type="radio" name="status" value="AGUARDANDO PEÇA" onchange="salvarAuto()"> AGUARDANDO PEÇA</label>
-      </div>
-      <div class="field" style="margin-top:10px;border:1.5px solid #000;border-radius:10px"><label>Técnico</label><input id="fTecnico" placeholder="Nome" oninput="salvarAuto()"></div>
-    </div>
-
-    <div style="margin-top:16px">
-      <div class="card" style="box-shadow:none;margin:0 0 10px 0">
-        <div style="display:flex;justify-content:space-between;font-weight:900"><span>📷 ANTES</span><span id="cAntes" style="background:#000;color:#fff;border-radius:12px;padding:2px 8px">0/5</span></div>
-        <div class="fotos" style="margin-top:10px">
-          <button class="btn-cam" onclick="document.getElementById('fileAntesCam').click()">📷 Câmera</button>
-          <button class="btn-gal" onclick="document.getElementById('fileAntesGal').click()">🖼️ Galeria</button>
-        </div>
-        <input type="file" id="fileAntesCam" accept="image/*" capture="environment" hidden onchange="handleFotos(this,'antes')">
-        <input type="file" id="fileAntesGal" accept="image/*" multiple hidden onchange="handleFotos(this,'antes')">
-        <div id="gridAntes" class="thumb-grid"></div>
-      </div>
-      <div class="card" style="box-shadow:none;margin:0">
-        <div style="display:flex;justify-content:space-between;font-weight:900"><span>📷 DEPOIS</span><span id="cDepois" style="background:#000;color:#fff;border-radius:12px;padding:2px 8px">0/5</span></div>
-        <div class="fotos" style="margin-top:10px">
-          <button class="btn-cam" onclick="document.getElementById('fileDepoisCam').click()">📷 Câmera</button>
-          <button class="btn-gal" onclick="document.getElementById('fileDepoisGal').click()">🖼️ Galeria</button>
-        </div>
-        <input type="file" id="fileDepoisCam" accept="image/*" capture="environment" hidden onchange="handleFotos(this,'depois')">
-        <input type="file" id="fileDepoisGal" accept="image/*" multiple hidden onchange="handleFotos(this,'depois')">
-        <div id="gridDepois" class="thumb-grid"></div>
-      </div>
-    </div>
-
-    <div class="action-row">
-      <button class="btn-print" onclick="window.print()">Imprimir</button>
-      <button class="btn-pdf" onclick="gerarPDF()">Gerar PDF - 2 Páginas</button>
+<!-- HOME -->
+<div id="view-home" class="view">
+  <div class="container">
+    <div class="card"><h2>Home BETHEC</h2><p style="margin-top:8px">Selecione o que deseja fazer:</p>
+      <button class="company-select" style="margin-top:12px;background:#000;color:#fff" onclick="mudarTela('os')">+ Nova OS</button>
+      <button class="company-select" onclick="mudarTela('empresas')">Ver Empresas Cadastradas</button>
     </div>
   </div>
 </div>
+
+<!-- OS -->
+<div id="view-os" class="view active">
+  <div class="container">
+    <div class="card">
+      <label><b>Empresa (pasta) *</b> - Clique para selecionar</label>
+      <select id="empresaSelect" class="company-select" style="background:#fef9c3" onchange="selecionarEmpresa(this.value)">
+        <option value="">Selecione a empresa *</option>
+      </select>
+      <input id="empresaInput" class="company-select" placeholder="Ou digite nova empresa e pressione Enter" onkeydown="if(event.key==='Enter')addEmpresa()">
+      <small>Pasta atual: <b id="pastaNome" style="color:#2563eb">Nenhuma</b> - Salvamento automático ativo</small>
+    </div>
+
+    <div class="card">
+      <div class="os-number"><b>ORDEM DE SERVIÇO Nº <span id="numOS">8537</span></b><div id="dataOS" style="margin-top:6px"></div></div>
+      <div class="form-grid">
+        <div class="field"><label>Empresa</label><input id="fEmpresa"></div>
+        <div class="field"><label>Cidade</label><input id="fCidade"></div>
+        <div class="field"><label>Marca</label><input id="fMarca"></div>
+        <div class="field"><label>Modelo</label><input id="fModelo"></div>
+        <div class="field"><label>Chassis</label><input id="fChassis"></div>
+        <div class="field"><label>Frota</label><input id="fFrota"></div>
+      </div>
+      <div style="margin:12px 0;border:1.5px dashed #000;border-radius:12px;padding:12px;display:flex;gap:12px;flex-wrap:wrap">
+        <strong>Tipo:</strong>
+        <label><input type="radio" name="tipo" value="Corretiva"> Corretiva</label>
+        <label><input type="radio" name="tipo" value="Preventiva"> Preventiva</label>
+        <label><input type="checkbox" id="tipoOrc"> Orçamento</label>
+      </div>
+      <div><b>ASSINATURA</b><canvas id="sigCanvas"></canvas><br><button onclick="limparAss()">Limpar</button></div>
+      <div style="margin-top:12px"><b>STATUS</b>
+        <label class="status-option"><input type="radio" name="status" value="LIBERADO" checked> LIBERADO</label>
+        <label class="status-option"><input type="radio" name="status" value="PARADO"> PARADO</label>
+        <label class="status-option"><input type="radio" name="status" value="AGUARDANDO PEÇA"> AGUARDANDO PEÇA</label>
+      </div>
+      <div class="field" style="margin-top:10px;border:1.5px solid #000;border-radius:10px"><label>Técnico</label><input id="fTecnico"></div>
+      <div class="action-row"><button onclick="window.print()">Imprimir</button><button class="btn-pdf" onclick="gerarPDF()">Gerar PDF</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- EMPRESAS -->
+<div id="view-empresas" class="view">
+  <div class="container">
+    <div class="card">
+      <h2>Empresas Cadastradas</h2>
+      <div id="listaEmpresas" style="margin-top:12px"></div>
+      <p id="semEmpresa" style="color:#666;display:none">Nenhuma empresa cadastrada ainda.</p>
+    </div>
+  </div>
+</div>
+
 <script>
 let dados={antes:[],depois:[],assinatura:null}
-function init(){
-  document.getElementById('dataOS').innerText=new Date().toLocaleDateString('pt-BR');
-  let num=localStorage.getItem('bethec_last_os'); if(!num){num=8537}else{num=parseInt(num)+1}
-  document.getElementById('numOS').innerText=num; localStorage.setItem('bethec_last_os',num);
-  for(let i=0;i<3;i++) addLinha();
-  carregarEmpresas(); setupCanvas(); carregarAuto();
+function mudarTela(tela){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('.top-bar button').forEach(b=>b.classList.remove('active'));
+  document.getElementById('view-'+tela).classList.add('active');
+  document.getElementById('btn-'+tela).classList.add('active');
+  if(tela==='empresas') renderListaEmpresas();
 }
+
+function selecionarEmpresa(valor){
+  if(!valor) return;
+  localStorage.setItem('bethec_empresa_atual', valor);
+  document.getElementById('pastaNome').innerText=valor;
+  document.getElementById('fEmpresa').value=valor;
+  salvarAuto();
+  alert('Empresa selecionada: '+valor+'\nAgora a OS será salva na pasta dessa empresa.');
+}
+
 function addEmpresa(){
   let v=document.getElementById('empresaInput').value.trim(); if(!v)return;
-  let emps=JSON.parse(localStorage.getItem('bethec_empresas')||'[]'); if(!emps.includes(v)) emps.push(v);
-  localStorage.setItem('bethec_empresas',JSON.stringify(emps)); document.getElementById('empresaInput').value=''; carregarEmpresas(); document.getElementById('empresaSelect').value=v; salvarAuto();
+  let emps=JSON.parse(localStorage.getItem('bethec_empresas')||'[]'); 
+  if(!emps.includes(v)) emps.push(v);
+  localStorage.setItem('bethec_empresas',JSON.stringify(emps)); 
+  document.getElementById('empresaInput').value=''; 
+  carregarEmpresas(); 
+  document.getElementById('empresaSelect').value=v; 
+  selecionarEmpresa(v);
 }
+
 function carregarEmpresas(){
-  let emps=JSON.parse(localStorage.getItem('bethec_empresas')||'[]'); let sel=document.getElementById('empresaSelect');
-  sel.innerHTML='<option value="">Selecione a empresa *</option>'; emps.forEach(e=>{let o=document.createElement('option');o.value=e;o.innerText=e;sel.appendChild(o)})
+  let emps=JSON.parse(localStorage.getItem('bethec_empresas')||'[]'); 
+  let sel=document.getElementById('empresaSelect');
+  let atual = localStorage.getItem('bethec_empresa_atual') || '';
+  sel.innerHTML='<option value="">Selecione a empresa *</option>'; 
+  emps.forEach(e=>{
+    let o=document.createElement('option'); o.value=e; o.innerText=e;
+    if(e===atual) o.selected=true;
+    sel.appendChild(o)
+  });
+  if(atual) document.getElementById('pastaNome').innerText=atual;
 }
-function addLinha(){ let tr=document.createElement('tr'); tr.innerHTML='<td><input oninput=salvarAuto()></td><td><input oninput=salvarAuto()></td><td><input oninput=salvarAuto()></td>'; document.getElementById('pecasTable').appendChild(tr)}
+
+function renderListaEmpresas(){
+  let emps=JSON.parse(localStorage.getItem('bethec_empresas')||'[]');
+  let lista=document.getElementById('listaEmpresas');
+  let vazio=document.getElementById('semEmpresa');
+  if(emps.length===0){ lista.innerHTML=''; vazio.style.display='block'; return; }
+  vazio.style.display='none';
+  lista.innerHTML='';
+  emps.forEach(emp=>{
+    let count=Object.keys(localStorage).filter(k=>k.startsWith('bethec_os_'+emp+'_')).length;
+    let div=document.createElement('div');
+    div.className='empresa-item';
+    div.innerHTML=`<div><b>${emp}</b><br><small>${count} OS salvas</small></div><div>📁 Abrir</div>`;
+    div.onclick=()=>{
+      document.getElementById('empresaSelect').value=emp;
+      selecionarEmpresa(emp);
+      mudarTela('os');
+    };
+    lista.appendChild(div);
+  });
+}
+
 function setupCanvas(){
-  const c=document.getElementById('sigCanvas'); const ctx=c.getContext('2d'); function resize(){ const r=c.getBoundingClientRect(); c.width=r.width*2; c.height=r.height*2; ctx.scale(2,2); ctx.lineWidth=2; ctx.lineCap='round'}; resize();
-  let drawing=false; function pos(e){ const rect=c.getBoundingClientRect(); const t=e.touches?e.touches[0]:e; return {x:t.clientX-rect.left,y:t.clientY-rect.top} }
+  const c=document.getElementById('sigCanvas'); const ctx=c.getContext('2d');
+  function resize(){ const r=c.getBoundingClientRect(); c.width=r.width*2; c.height=r.height*2; ctx.scale(2,2); ctx.lineWidth=2; ctx.lineCap='round'}; resize();
+  let drawing=false; 
+  function pos(e){ const rect=c.getBoundingClientRect(); const t=e.touches?e.touches[0]:e; return {x:t.clientX-rect.left,y:t.clientY-rect.top} }
   c.addEventListener('mousedown',e=>{drawing=true; const p=pos(e); ctx.beginPath(); ctx.moveTo(p.x,p.y)}); 
   c.addEventListener('mousemove',e=>{ if(!drawing)return; const p=pos(e); ctx.lineTo(p.x,p.y); ctx.stroke()});
-  c.addEventListener('mouseup',()=>{drawing=false; salvarAss()}); 
+  c.addEventListener('mouseup',()=>{drawing=false; dados.assinatura=c.toDataURL();});
   c.addEventListener('touchstart',e=>{drawing=true; const p=pos(e); ctx.beginPath(); ctx.moveTo(p.x,p.y); e.preventDefault()}, {passive:false});
   c.addEventListener('touchmove',e=>{ if(!drawing)return; const p=pos(e); ctx.lineTo(p.x,p.y); ctx.stroke(); e.preventDefault()}, {passive:false});
-  c.addEventListener('touchend',()=>{drawing=false; salvarAss()});
+  c.addEventListener('touchend',()=>{drawing=false; dados.assinatura=c.toDataURL();});
 }
-function limparAss(){ const c=document.getElementById('sigCanvas'); const ctx=c.getContext('2d'); ctx.clearRect(0,0,c.width,c.height); dados.assinatura=null; salvarAuto()}
-function salvarAss(){ const c=document.getElementById('sigCanvas'); dados.assinatura=c.toDataURL(); salvarAuto()}
-function handleFotos(input,tipo){
-  const files=input.files; for(let f of files){ if(dados[tipo].length>=5){alert('Máximo 5 fotos em '+tipo); break} const r=new FileReader(); r.onload=e=>{dados[tipo].push(e.target.result); renderFotos(); salvarAuto()}; r.readAsDataURL(f) } input.value='';
-}
-function renderFotos(){ ['antes','depois'].forEach(t=>{ const g=document.getElementById(t==='antes'?'gridAntes':'gridDepois'); g.innerHTML=''; dados[t].forEach((src,i)=>{ let img=document.createElement('img'); img.src=src; img.onclick=()=>{ if(confirm('Remover foto?')){ dados[t].splice(i,1); renderFotos(); salvarAuto()}}; g.appendChild(img)}); document.getElementById(t==='antes'?'cAntes':'cDepois').innerText=dados[t].length+'/5'})}
+function limparAss(){ const c=document.getElementById('sigCanvas'); c.getContext('2d').clearRect(0,0,c.width,c.height); dados.assinatura=null; }
 function salvarAuto(){
-  const empresa=document.getElementById('empresaSelect').value||document.getElementById('fEmpresa').value;
-  document.getElementById('pastaNome').innerText=empresa||'Nenhuma';
-  const payload={ empresa, fEmpresa:document.getElementById('fEmpresa').value, fCidade:document.getElementById('fCidade').value, fHorimetro:document.getElementById('fHorimetro').value, fMarca:document.getElementById('fMarca').value, fModelo:document.getElementById('fModelo').value, fMotor:document.getElementById('fMotor').value, fChassis:document.getElementById('fChassis').value, fFrota:document.getElementById('fFrota').value, tipo:document.querySelector('input[name=tipo]:checked')?.value||'', orc:document.getElementById('tipoOrc').checked, desc:document.getElementById('descMao').value, h1:document.getElementById('h1').value, h2:document.getElementById('h2').value, h3:document.getElementById('h3').value, h4:document.getElementById('h4').value, status:document.querySelector('input[name=status]:checked')?.value, tecnico:document.getElementById('fTecnico').value, dados, num:document.getElementById('numOS').innerText, data:document.getElementById('dataOS').innerText, pecas:[...document.querySelectorAll('#pecasTable tr')].slice(2).map(tr=>[...tr.querySelectorAll('input')].map(i=>i.value)) };
+  let empresa=document.getElementById('empresaSelect').value || document.getElementById('fEmpresa').value;
+  let payload={empresa, fEmpresa:document.getElementById('fEmpresa').value, num:document.getElementById('numOS').innerText, dados};
   if(empresa) localStorage.setItem('bethec_os_'+empresa+'_'+payload.num, JSON.stringify(payload));
   localStorage.setItem('bethec_current_os', JSON.stringify(payload));
 }
-function carregarAuto(){ const s=localStorage.getItem('bethec_current_os'); if(!s)return; try{ const p=JSON.parse(s); document.getElementById('fEmpresa').value=p.fEmpresa||''; document.getElementById('fCidade').value=p.fCidade||''; document.getElementById('fHorimetro').value=p.fHorimetro||''; document.getElementById('fMarca').value=p.fMarca||''; document.getElementById('fModelo').value=p.fModelo||''; document.getElementById('fMotor').value=p.fMotor||''; document.getElementById('fChassis').value=p.fChassis||''; document.getElementById('fFrota').value=p.fFrota||''; document.getElementById('descMao').value=p.desc||''; document.getElementById('fTecnico').value=p.tecnico||''; dados=p.dados||{antes:[],depois:[],assinatura:null}; renderFotos(); }catch(e){} }
-async function gerarPDF(){
-  salvarAuto();
-  const {jsPDF}=window.jspdf; const doc=new jsPDF('p','mm','a4'); const empresa=document.getElementById('empresaSelect').value||document.getElementById('fEmpresa').value||'SemEmpresa';
-  doc.setFontSize(12); doc.text('BETHEC Empilhadeiras - OS N '+document.getElementById('numOS').innerText,10,15);
-  doc.text('Empresa: '+document.getElementById('fEmpresa').value,10,22); doc.text('Data: '+document.getElementById('dataOS').innerText,10,28);
-  let y=35; doc.text('Pecas:',10,y); y+=6; document.querySelectorAll('#pecasTable tr').forEach((tr,i)=>{ if(i<2)return; const vals=[...tr.querySelectorAll('input')].map(v=>v.value).join(' - '); if(vals.trim()){doc.text(vals,10,y); y+=6}}); 
-  doc.text('Descricao: '+(document.getElementById('descMao').value||''),10,y+4);
-  doc.text('Status: '+(document.querySelector('input[name=status]:checked')?.value||''),10,y+12);
-  if(dados.assinatura){ try{ doc.addImage(dados.assinatura,'PNG',10,y+18,60,20)}catch(e){} }
-  doc.addPage(); doc.text('Fotos Antes/Depois e Horarios',10,15);
-  doc.save('OS_'+empresa+'_'+document.getElementById('numOS').innerText+'.pdf');
+function gerarPDF(){
+  const {jsPDF}=window.jspdf; const doc=new jsPDF(); 
+  let empresa=document.getElementById('empresaSelect').value||'SemEmpresa';
+  doc.text('BETHEC OS '+document.getElementById('numOS').innerText+' - '+empresa,10,15);
+  doc.save('OS_'+empresa+'.pdf');
   setTimeout(()=>{
-    if(confirm('PDF gerado e salvo na pasta da empresa: '+empresa+'\n\nDeseja enviar direto para o e-mail da empresa bethecemp@outlook.com ?')){
-      const assunto=encodeURIComponent('OS '+document.getElementById('numOS').innerText+' - '+empresa);
-      const corpo=encodeURIComponent('Segue OS '+document.getElementById('numOS').innerText+' da empresa '+empresa+'\n\nStatus: '+document.querySelector('input[name=status]:checked').value+'\nTecnico: '+document.getElementById('fTecnico').value+'\n\nPDF salvo em: pasta '+empresa);
-      window.location.href='mailto:bethecemp@outlook.com?subject='+assunto+'&body='+corpo;
+    if(confirm('PDF salvo na pasta '+empresa+'\nEnviar para bethecemp@outlook.com?')){
+      window.location.href='mailto:bethecemp@outlook.com?subject=OS '+document.getElementById('numOS').innerText;
     }
   },500);
+}
+function init(){
+  document.getElementById('dataOS').innerText=new Date().toLocaleDateString('pt-BR');
+  let num=localStorage.getItem('bethec_last_os'); if(!num) num=8537; else num=parseInt(num)+1;
+  document.getElementById('numOS').innerText=num; localStorage.setItem('bethec_last_os',num);
+  carregarEmpresas(); setupCanvas();
 }
 init();
 </script>
